@@ -1,0 +1,24 @@
+
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Copy file via scp
+      uses: devjaime/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        PORT: ${{ secrets.PORT }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.SSH_KEY_PASS }}
+     
+
+      with:
+        rm: true
+        source: "./"
+        target: "/var/www/html/wp-content/themes"
